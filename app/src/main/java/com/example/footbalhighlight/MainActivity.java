@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
     private RecyclerView recyclerView;
     RecycleAdapter recycleAdapter;
 
+    String theType;
+
     ArrayList<FootballModel> highlight_List = new ArrayList<>();;
 
     //the URL
@@ -47,6 +49,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+
+        // get the vedioHTml from MainActivity
+        Intent intent = getIntent();
+        theType = intent.getStringExtra("type");
 
         loadData();
     }
@@ -72,13 +78,17 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
                                 JSONObject ftballObject = response.getJSONObject(i);
                                 JSONObject catagory = ftballObject.getJSONObject("competition");
 
+                                if( catagory.getString("name").contains(theType))
+                                {
+                                    //creating a hero object and giving them the values from json object
+                                    FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
+
+                                    //adding the hero to highlight_List
+                                    highlight_List.add(footballModel);
+                                }
 
 
-                                //creating a hero object and giving them the values from json object
-                                FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
 
-                                //adding the hero to highlight_List
-                                highlight_List.add(footballModel);
                             }
 
                             //creating custom adapter object
