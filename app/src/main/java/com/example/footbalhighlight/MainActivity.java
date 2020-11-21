@@ -78,14 +78,31 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
                                 JSONObject ftballObject = response.getJSONObject(i);
                                 JSONObject catagory = ftballObject.getJSONObject("competition");
 
-                                if( catagory.getString("name").contains(theType))
+                                if(theType.equalsIgnoreCase("OTHER"))
                                 {
-                                    //creating a hero object and giving them the values from json object
-                                    FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
+                                    if( !catagory.getString("name").contains("ENGLAND") && !catagory.getString("name").contains("SPAIN") && !catagory.getString("name").contains("ITALY")&& !catagory.getString("name").contains("FRANCE") && !catagory.getString("name").contains("GERMANY") )
+                                    {
+                                        //creating a hero object and giving them the values from json object
+                                        FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
 
-                                    //adding the hero to highlight_List
-                                    highlight_List.add(footballModel);
+                                        //adding the hero to highlight_List
+                                        highlight_List.add(footballModel);
+                                    }
                                 }
+                                else {
+                                    if( catagory.getString("name").contains(theType))
+                                    {
+                                        //creating a hero object and giving them the values from json object
+                                        FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
+
+                                        //adding the hero to highlight_List
+                                        highlight_List.add(footballModel);
+                                    }
+
+                                }
+
+
+
 
 
 
