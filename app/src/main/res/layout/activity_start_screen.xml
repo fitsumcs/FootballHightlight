@@ -23,6 +23,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
+            android:onClick="viewEngland"
             android:text="England"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -35,6 +36,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
+            android:onClick="viewSpain"
             android:text="Spain"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -53,8 +55,9 @@
             android:id="@+id/textView_italy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="25dp"
+            android:onClick="viewItaly"
             android:text="Italy"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -65,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="55dp"
             android:gravity="left"
+            android:onClick="viewFrance"
             android:text="France"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -87,6 +91,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
+            android:onClick="viewGermany"
             android:text="Germany"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -99,6 +104,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
+            android:onClick="viewOther"
             android:text="Other"
             android:textSize="24sp"
             android:textStyle="bold" />
