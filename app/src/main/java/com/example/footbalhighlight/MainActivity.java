@@ -68,10 +68,13 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
                             //now looping through all the elements of the json array
                             for (int i = 0; i < response.length(); i++) {
                                 //getting the json object of the particular index inside the array
-                                JSONObject heroObject = response.getJSONObject(i);
+                                JSONObject ftballObject = response.getJSONObject(i);
+                                JSONObject catagory = ftballObject.getJSONObject("competition");
+
+
 
                                 //creating a hero object and giving them the values from json object
-                                FootballModel footballModel = new FootballModel(heroObject.getString("title"), heroObject.getString("title"),heroObject.getString("date"));
+                                FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"));
 
                                 //adding the hero to highlight_List
                                 highlight_List.add(footballModel);

@@ -2,12 +2,14 @@ package com.example.footbalhighlight;
 
 public class FootballModel {
 
-    String title, catagory , date;
+    String title, catagory , date,thumbnail;
 
-    public FootballModel(String title, String catagory ,String date ) {
+
+    public FootballModel(String title, String catagory ,String date,String thumbnail ) {
         this.title= title;
         this.catagory= catagory;
         this.date= date;
+        this.thumbnail= thumbnail;
     }
 
 
@@ -33,5 +35,13 @@ public class FootballModel {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

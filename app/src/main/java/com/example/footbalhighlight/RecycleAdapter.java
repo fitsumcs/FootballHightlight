@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -42,11 +45,16 @@ public class RecycleAdapter  extends RecyclerView.Adapter<RecycleAdapter.MyIdeaH
         String teams = footballModel.getTitle();
         String catagory = footballModel.getCatagory();
         String date = footballModel.getDate();
+        String imagUrl = footballModel.getThumbnail();
 
         //set the view
         holder.teams.setText(teams);
         holder.catagory.setText(catagory);
         holder.date.setText(date);
+
+        Glide.with(context)
+                .load(imagUrl)
+                .into(holder.imgUrl);
 
     }
 
@@ -61,6 +69,7 @@ public class RecycleAdapter  extends RecyclerView.Adapter<RecycleAdapter.MyIdeaH
         TextView teams;
         TextView catagory;
         TextView date;
+        ImageView imgUrl;
         OnItemClickedListener onItemClickedListener;
 
         public MyIdeaHandler(@NonNull View myview , OnItemClickedListener onItemClickedListener) {
@@ -68,6 +77,7 @@ public class RecycleAdapter  extends RecyclerView.Adapter<RecycleAdapter.MyIdeaH
             teams   =   myview.findViewById(R.id.textView_teams);
             catagory   =   myview.findViewById(R.id.textView_catagory);
             date =   myview.findViewById(R.id.textView_Date);
+            imgUrl =   myview.findViewById(R.id.imageView3);
 
             this.onItemClickedListener = onItemClickedListener;
 
