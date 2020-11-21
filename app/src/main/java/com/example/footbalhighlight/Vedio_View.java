@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class Vedio_View extends AppCompatActivity {
 
 
+
     WebView webview;
 
     @Override
