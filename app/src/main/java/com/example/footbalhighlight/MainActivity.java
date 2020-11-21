@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -126,6 +127,14 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
 
     @Override
     public void onItemClicked(int position) {
+        FootballModel shopingModle = highlight_List.get(position);
+
+        String title=shopingModle.getTitle();
+
+        // start the SecondActivity
+        Intent intent = new Intent(this, Vedio_View.class);
+        intent.putExtra("title", title);
+        startActivity(intent);
 
 
     }
