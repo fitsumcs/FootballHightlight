@@ -2,14 +2,28 @@ package com.example.footbalhighlight;
 
 public class FootballModel {
 
-    String title, catagory , date,thumbnail;
+    String title;
+    String catagory;
+    String date;
+    String thumbnail;
+
+    public String getVedioHtml() {
+        return vedioHtml;
+    }
+
+    public void setVedioHtml(String vedioHtml) {
+        this.vedioHtml = vedioHtml;
+    }
+
+    String vedioHtml;
 
 
-    public FootballModel(String title, String catagory ,String date,String thumbnail ) {
+    public FootballModel(String title, String catagory ,String date,String thumbnail,String vedioHtml ) {
         this.title= title;
         this.catagory= catagory;
         this.date= date;
         this.thumbnail= thumbnail;
+        this.vedioHtml= vedioHtml;
     }
 
 

@@ -6,28 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Vedio_View">
 
-    <TextView
-        android:id="@+id/textView_title"
-        android:layout_width="280dp"
-        android:layout_height="39dp"
-        android:gravity="center"
-        android:text="Team 1 vs Team 2"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.028" />
-
     <WebView
-        android:layout_width="373dp"
-        android:layout_height="310dp"
+        android:id="@+id/vedioHtml"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.346"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_title"
-        app:layout_constraintVertical_bias="0.235" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
 
 
                                 //creating a hero object and giving them the values from json object
-                                FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"));
+                                FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
 
                                 //adding the hero to highlight_List
                                 highlight_List.add(footballModel);
@@ -129,11 +129,11 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
     public void onItemClicked(int position) {
         FootballModel shopingModle = highlight_List.get(position);
 
-        String title=shopingModle.getTitle();
+        String vedioHtml=shopingModle.getVedioHtml();
 
         // start the SecondActivity
         Intent intent = new Intent(this, Vedio_View.class);
-        intent.putExtra("title", title);
+        intent.putExtra("vedio", vedioHtml);
         startActivity(intent);
 
 

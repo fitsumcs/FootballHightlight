@@ -4,24 +4,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 public class Vedio_View extends AppCompatActivity {
 
-    TextView tv_title;
+
+    WebView webview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vedio__view);
 
-        tv_title = (TextView)findViewById(R.id.textView_title);
 
-        // get the text from MainActivity
+        // get the vedioHTml from MainActivity
         Intent intent = getIntent();
-        String text = intent.getStringExtra("title");
+        String vhtl = intent.getStringExtra("vedio");
 
-        tv_title.setText(text);
+
+        webview = (WebView)this.findViewById(R.id.vedioHtml);
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.loadData(vhtl, "text/html; charset=utf-8", "UTF-8");
+
 
     }
 }
