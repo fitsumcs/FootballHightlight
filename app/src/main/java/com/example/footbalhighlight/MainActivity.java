@@ -184,11 +184,13 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
+                recycleAdapter.getFilter().filter(s);
                 return false;
             }
         });

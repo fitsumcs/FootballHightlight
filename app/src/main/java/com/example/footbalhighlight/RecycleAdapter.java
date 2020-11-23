@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,11 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class RecycleAdapter  extends RecyclerView.Adapter<RecycleAdapter.MyIdeaHandler> {
+public class RecycleAdapter  extends RecyclerView.Adapter<RecycleAdapter.MyIdeaHandler> implements Filterable {
 
     Context context;
     ArrayList<FootballModel> highLightList;
+    ArrayList<FootballModel> copy_highLightList;
     private  OnItemClickedListener m_onItemClickedListener;
 
     public RecycleAdapter(Context con, ArrayList<FootballModel> highLightList, OnItemClickedListener onItemClickedListener)
@@ -26,6 +30,9 @@ public class RecycleAdapter  extends RecyclerView.Adapter<RecycleAdapter.MyIdeaH
         this.context = con;
         this.highLightList = highLightList;
         this.m_onItemClickedListener = onItemClickedListener;
+        //for using it separately
+        copy_highLightList = new ArrayList<>(highLightList);
+
 
     }
 
@@ -63,6 +70,50 @@ public class RecycleAdapter  extends RecyclerView.Adapter<RecycleAdapter.MyIdeaH
     public int getItemCount() {
         return highLightList.size();
     }
+
+    //the filter
+    @Override
+    public Filter getFilter() {
+        return myHighlightFilter;
+    }
+    private  Filter myHighlightFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            ArrayList<FootballModel> filterList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length()==0)
+            {
+                filterList.addAll(copy_highLightList);
+            }
+            else{
+                String fillterPattern = charSequence.toString().toLowerCase().trim();
+                for (FootballModel item: copy_highLightList)
+                {
+                       if(item.getTitle().toLowerCase().contains(fillterPattern))
+                       {
+                           filterList.add(item);
+                       }
+                }
+                
+
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filterList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+            highLightList.clear();
+            highLightList.addAll((List)filterResults.values);
+            notifyDataSetChanged();
+
+
+        }
+    };
 
     public class MyIdeaHandler extends RecyclerView.ViewHolder implements View.OnClickListener {
 
