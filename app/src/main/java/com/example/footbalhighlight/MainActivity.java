@@ -3,6 +3,7 @@ package com.example.footbalhighlight;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
 
     TextView noConnection,connectMe;
 
+    SwipeRefreshLayout swipeLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
 
         noConnection = (TextView)findViewById(R.id.textView_NoConnection);
         connectMe = (TextView)findViewById(R.id.textView_ConnectMe);;
+
+        // Getting SwipeContainerLayout
+        swipeLayout = findViewById(R.id.swipe_container);
 
         mDialog=new ProgressDialog(this);
 
@@ -73,6 +79,16 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
         theType = intent.getStringExtra("type");
 
         loadData();
+
+
+        //swip listener
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+                swipeLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void loadData() {
