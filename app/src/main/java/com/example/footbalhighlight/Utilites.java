@@ -1,6 +1,8 @@
 package com.example.footbalhighlight;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -31,6 +33,13 @@ public class Utilites {
         }
 
        return mydate;
+    }
+
+    //check network
+
+    public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
 }

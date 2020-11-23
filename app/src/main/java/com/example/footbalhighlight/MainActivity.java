@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -47,10 +48,17 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
     //the URL
     private static final String URL = "https://free-football-soccer-videos1.p.rapidapi.com/v1/";
 
+    TextView noConnection,connectMe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        noConnection = (TextView)findViewById(R.id.textView_NoConnection);
+        connectMe = (TextView)findViewById(R.id.textView_ConnectMe);;
 
         mDialog=new ProgressDialog(this);
 
@@ -69,99 +77,118 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
 
     private void loadData() {
 
-        mDialog.setMessage("Loading..");
-        mDialog.show();
-
-
-        //creating a string request to send request to the url
-        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, URL,null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        //hiding the progressbar after completion
-                        mDialog.dismiss();
-
-                        try {
-
-
-                            //now looping through all the elements of the json array
-                            for (int i = 0; i < response.length(); i++) {
-                                //getting the json object of the particular index inside the array
-                                JSONObject ftballObject = response.getJSONObject(i);
-                                JSONObject catagory = ftballObject.getJSONObject("competition");
-
-                                if(theType.equalsIgnoreCase("OTHER"))
-                                {
-                                    if( !catagory.getString("name").contains("ENGLAND") && !catagory.getString("name").contains("SPAIN") && !catagory.getString("name").contains("ITALY")&& !catagory.getString("name").contains("FRANCE") && !catagory.getString("name").contains("GERMANY") )
-                                    {
-                                        //creating a hero object and giving them the values from json object
-                                        FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
-
-                                        //adding the hero to highlight_List
-                                        highlight_List.add(footballModel);
-                                    }
-                                }
-                                else {
-                                    if( catagory.getString("name").contains(theType))
-                                    {
-                                        //creating a hero object and giving them the values from json object
-                                        FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
-
-                                        //adding the hero to highlight_List
-                                        highlight_List.add(footballModel);
-                                    }
-
-                                }
-
-
-
-
-
-
-                            }
-
-                            //creating custom adapter object
-                             recycleAdapter = new RecycleAdapter(getApplicationContext(),highlight_List,MainActivity.this::onItemClicked);
-
-                            //adding the adapter to listview
-                            recyclerView.setAdapter(recycleAdapter);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-
-
-
-        )
+        if(new Utilites().isNetworkAvailable(this))
         {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("x-rapidapi-host", "free-football-soccer-videos1.p.rapidapi.com");
-                headers.put("x-rapidapi-key", "64bca0886bmsha7377930000aed5p1a6aecjsn8fa7b68dbbfb");
-                return headers;
+            recyclerView.setVisibility(View.VISIBLE);
+
+            noConnection.setVisibility(View.GONE);
+            connectMe.setVisibility(View.GONE);
+
+
+            mDialog.setMessage("Loading..");
+            mDialog.show();
+
+
+            //creating a string request to send request to the url
+            JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, URL,null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+
+                            //hiding the progressbar after completion
+                            mDialog.dismiss();
+
+                            try {
+
+
+                                //now looping through all the elements of the json array
+                                for (int i = 0; i < response.length(); i++) {
+                                    //getting the json object of the particular index inside the array
+                                    JSONObject ftballObject = response.getJSONObject(i);
+                                    JSONObject catagory = ftballObject.getJSONObject("competition");
+
+                                    if(theType.equalsIgnoreCase("OTHER"))
+                                    {
+                                        if( !catagory.getString("name").contains("ENGLAND") && !catagory.getString("name").contains("SPAIN") && !catagory.getString("name").contains("ITALY")&& !catagory.getString("name").contains("FRANCE") && !catagory.getString("name").contains("GERMANY") )
+                                        {
+                                            //creating a hero object and giving them the values from json object
+                                            FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
+
+                                            //adding the hero to highlight_List
+                                            highlight_List.add(footballModel);
+                                        }
+                                    }
+                                    else {
+                                        if( catagory.getString("name").contains(theType))
+                                        {
+                                            //creating a hero object and giving them the values from json object
+                                            FootballModel footballModel = new FootballModel(ftballObject.getString("title"), catagory.getString("name"), new Utilites().dateFormater(ftballObject.getString("date")),ftballObject.getString("thumbnail"),ftballObject.getString("embed"));
+
+                                            //adding the hero to highlight_List
+                                            highlight_List.add(footballModel);
+                                        }
+
+                                    }
+
+
+
+
+
+
+                                }
+
+                                //creating custom adapter object
+                                recycleAdapter = new RecycleAdapter(getApplicationContext(),highlight_List,MainActivity.this::onItemClicked);
+
+                                //adding the adapter to listview
+                                recyclerView.setAdapter(recycleAdapter);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //displaying the error in toast if occurrs
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+
+
+            )
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("x-rapidapi-host", "free-football-soccer-videos1.p.rapidapi.com");
+                    headers.put("x-rapidapi-key", "64bca0886bmsha7377930000aed5p1a6aecjsn8fa7b68dbbfb");
+                    return headers;
+                }
             }
+                    ;
+
+            //creating a request queue
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+            //adding the string request to request queue
+            requestQueue.add(stringRequest);
         }
-                ;
 
-        //creating a request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        else {
 
-        //adding the string request to request queue
-        requestQueue.add(stringRequest);
+            noConnection.setVisibility(View.VISIBLE);
+            connectMe.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+
+        }
+
+
 
     }
 
@@ -189,6 +216,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -198,11 +227,21 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
 
             @Override
             public boolean onQueryTextChange(String s) {
-                recycleAdapter.getFilter().filter(s);
+                if(recyclerView.getVisibility() == View.VISIBLE) {
+                    recycleAdapter.getFilter().filter(s);
+                } else {
+                    // Invisible
+                }
+
                 return false;
             }
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void refreshView(View view) {
+        loadData();
+
     }
 }
