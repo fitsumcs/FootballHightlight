@@ -2,6 +2,8 @@ package com.example.footbalhighlight;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,34 +30,26 @@ public class StartScreen extends AppCompatActivity {
     //england
     public void viewEngland(View view) {
         // start the SecondActivity
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("type", "ENGLAND");
-        startActivity(intent);
+        gotActivity(this, "ENGLAND" ,  MainActivity.class);
     }
 
     //spain
 
     public void viewSpain(View view) {
         // start the SecondActivity
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("type", "SPAIN");
-        startActivity(intent);
+        gotActivity(this, "SPAIN" ,  MainActivity.class);
     }
 
     //italy
     public void viewItaly(View view) {
         // start the SecondActivity
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("type", "ITALY");
-        startActivity(intent);
+        gotActivity(this, "ITALY" ,  MainActivity.class);
     }
 
     //france
     public void viewFrance(View view) {
         // start the SecondActivity
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("type", "FRANCE");
-        startActivity(intent);
+        gotActivity(this, "FRANCE" ,  MainActivity.class);
     }
 
     //germany
@@ -63,16 +57,21 @@ public class StartScreen extends AppCompatActivity {
     public void viewGermany(View view) {
 
         // start the SecondActivity
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("type", "GERMANY");
-        startActivity(intent);
+        gotActivity(this, "GERMANY" ,  MainActivity.class);
     }
 
     //other
     public void viewOther(View view) {
         // start the SecondActivity
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("type", "OTHER");
+        gotActivity(this, "OTHER" ,  MainActivity.class);
+    }
+
+
+    public void gotActivity(Context context, String type , Class cls)
+    {
+        // start the SecondActivity
+        Intent intent = new Intent(context, cls);
+        intent.putExtra("type", type);
         startActivity(intent);
     }
 
