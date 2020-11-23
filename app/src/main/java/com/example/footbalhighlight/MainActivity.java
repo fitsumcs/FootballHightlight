@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
     private RecyclerView recyclerView;
     RecycleAdapter recycleAdapter;
 
+    private ProgressDialog mDialog;
+
     String theType;
 
     ArrayList<FootballModel> highlight_List = new ArrayList<>();;
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mDialog=new ProgressDialog(this);
 
         recyclerView=findViewById(R.id.recycler_home);
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
@@ -64,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
 
     private void loadData() {
 
+        mDialog.setMessage("Loading..");
+        mDialog.show();
 
 
         //creating a string request to send request to the url
@@ -72,7 +79,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickedList
                     @Override
                     public void onResponse(JSONArray response) {
 
-
+                        //hiding the progressbar after completion
+                        mDialog.dismiss();
 
                         try {
 
